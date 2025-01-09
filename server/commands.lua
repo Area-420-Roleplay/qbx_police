@@ -136,12 +136,6 @@ lib.addCommand('callsign', {
     player.Functions.SetMetaData('callsign', args.callsign)
 end)
 
-lib.addCommand('clearcasings', {help = locale('commands.clear_casign')}, function(source)
-    local player = exports.qbx_core:GetPlayer(source)
-    if not checkLeoAndOnDuty(player) then return end
-    TriggerClientEvent('evidence:client:ClearCasingsInArea', source)
-end)
-
 lib.addCommand('jail', {help = locale('commands.jail_player')}, function(source)
     local player = exports.qbx_core:GetPlayer(source)
     if not checkLeoAndOnDuty(player) then return end
@@ -163,12 +157,6 @@ lib.addCommand('unjail', {
     else
         TriggerClientEvent('prison:client:UnjailPerson', args.id)
     end
-end)
-
-lib.addCommand('clearblood', {help = locale('commands.clearblood')}, function(source)
-    local player = exports.qbx_core:GetPlayer(source)
-    if not checkLeoAndOnDuty(player) then return end
-    TriggerClientEvent('evidence:client:ClearBlooddropsInArea', source)
 end)
 
 lib.addCommand('seizecash', {help = locale('commands.seizecash')}, function(source)
@@ -267,6 +255,7 @@ lib.addCommand('plateinfo', {
     end
 end)
 
+--[[
 lib.addCommand('depot', {
     help = locale('commands.depot'),
     params = {{
@@ -285,6 +274,7 @@ lib.addCommand('impound', {help = locale('commands.impound')}, function(source)
     if not checkLeoAndOnDuty(player) then return end
     TriggerClientEvent('police:client:ImpoundVehicle', source, true)
 end)
+]]--
 
 lib.addCommand('paytow', {
     help = locale('commands.paytow'),
@@ -353,31 +343,6 @@ lib.addCommand('ankletlocation', {
         return exports.qbx_core:Notify(source, locale('error.no_anklet'), 'error')
     end
     TriggerClientEvent('police:client:SendTrackerLocation', target.PlayerData.source, source)
-end)
-
-lib.addCommand('takedna', {
-    help = locale('commands.takedna'),
-    params = {{
-        name = 'id',
-        type = 'playerId',
-        help = locale('info.player_id')
-    }},
-}, function(source, args)
-    local player = exports.qbx_core:GetPlayer(source)
-    local otherPlayer = exports.qbx_core:GetPlayer(args.id)
-
-    if not checkLeoAndOnDuty(player) then return end
-    if not player.Functions.RemoveItem('empty_evidence_bag', 1) then
-        return exports.qbx_core:Notify(source, locale('error.have_evidence_bag'), 'error')
-    end
-
-    local info = {
-        label = locale('info.dna_sample'),
-        type = 'dna',
-        dnalabel = dnaHash(otherPlayer.PlayerData.citizenid),
-        description = dnaHash(otherPlayer.PlayerData.citizenid)
-    }
-    if not player.Functions.AddItem('filled_evidence_bag', 1, false, info) then return end
 end)
 
 lib.addCommand('911p', {

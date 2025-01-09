@@ -249,48 +249,48 @@ local function uiPrompt(promptType, id)
             if IsControlJustReleased(0, 38) then
                 if promptType == 'duty' then
                     ToggleDuty()
-                    lib.hideTextUI()
+                    exports['jg-textui']:HideText() -- Updated to use jg-textui
                     break
                 elseif promptType == 'garage' then
                     if not inGarage then return end
                     if cache.vehicle then
                         DeleteVehicle(cache.vehicle)
-                        lib.hideTextUI()
+                        exports['jg-textui']:HideText() -- Updated to use jg-textui
                         break
                     else
                         openGarageMenu()
-                        lib.hideTextUI()
+                        exports['jg-textui']:HideText() -- Updated to use jg-textui
                         break
                     end
                 elseif promptType == 'evidence' then
                     openEvidenceMenu()
-                    lib.hideTextUI()
+                    exports['jg-textui']:HideText() -- Updated to use jg-textui
                     break
                 elseif promptType == 'impound' then
                     if not inImpound then return end
                     if cache.vehicle then
                         DeleteVehicle(cache.vehicle)
-                        lib.hideTextUI()
+                        exports['jg-textui']:HideText() -- Updated to use jg-textui
                         break
                     else
                         openImpoundMenu()
-                        lib.hideTextUI()
+                        exports['jg-textui']:HideText() -- Updated to use jg-textui
                         break
                     end
                 elseif promptType == 'heli' then
                     if not inHelicopter then return end
                     if cache.vehicle then
                         DeleteVehicle(cache.vehicle)
-                        lib.hideTextUI()
+                        exports['jg-textui']:HideText() -- Updated to use jg-textui
                         break
                     else
                         spawnHelicopter()
-                        lib.hideTextUI()
+                        exports['jg-textui']:HideText() -- Updated to use jg-textui
                         break
                     end
                 elseif promptType == 'fingerprint' then
                     scanFingerprint()
-                    lib.hideTextUI()
+                    exports['jg-textui']:HideText() -- Updated to use jg-textui
                     break
                 elseif promptType == 'trash' then
                     if not inTrash then return end
@@ -305,6 +305,7 @@ local function uiPrompt(promptType, id)
         end
     end)
 end
+
 
 RegisterNUICallback('closeFingerprint', function(_, cb)
     SetNuiFocus(false, false)
@@ -456,12 +457,12 @@ else
             onEnter = function()
                 if QBX.PlayerData.job.type ~= 'leo' then return end
                 inPrompt = true
-                lib.showTextUI(locale(QBX.PlayerData.job.onduty and 'info.off_duty' or 'info.on_duty'))
+                exports['jg-textui']:ShowText(locale(QBX.PlayerData.job.onduty and 'info.off_duty' or 'info.on_duty')) -- Updated to use jg-textui
                 uiPrompt('duty')
             end,
             onExit = function()
                 inPrompt = false
-                lib.hideTextUI()
+                exports['jg-textui']:HideText() -- Updated to use jg-textui
             end
         })
     end
@@ -479,13 +480,13 @@ CreateThread(function()
                 if QBX.PlayerData.job.type ~= 'leo' or not QBX.PlayerData.job.onduty then return end
                 inTrash = true
                 inPrompt = true
-                lib.showTextUI(locale('info.trash_enter'))
+                exports['jg-textui']:ShowText(locale('info.trash_enter')) -- Updated to use jg-textui
                 uiPrompt('trash', i)
             end,
             onExit = function()
                 inTrash = false
                 inPrompt = false
-                lib.hideTextUI()
+                exports['jg-textui']:HideText() -- Updated to use jg-textui
             end
         })
     end
@@ -501,13 +502,13 @@ CreateThread(function()
                 if QBX.PlayerData.job.type ~= 'leo' or not QBX.PlayerData.job.onduty then return end
                 inFingerprint = true
                 inPrompt = true
-                lib.showTextUI(locale('info.scan_fingerprint'))
+                exports['jg-textui']:ShowText(locale('info.scan_fingerprint')) -- Updated to use jg-textui
                 uiPrompt('fingerprint')
             end,
             onExit = function()
                 inFingerprint = false
                 inPrompt = false
-                lib.hideTextUI()
+                exports['jg-textui']:HideText() -- Updated to use jg-textui
             end
         })
     end
@@ -524,12 +525,12 @@ CreateThread(function()
                 inHelicopter = true
                 inPrompt = true
                 uiPrompt('heli')
-                lib.showTextUI(locale(cache.vehicle and 'info.store_heli' or 'info.take_heli'))
+                exports['jg-textui']:ShowText(locale(cache.vehicle and 'info.store_heli' or 'info.take_heli')) -- Updated to use jg-textui
             end,
             onExit = function()
                 inHelicopter = false
                 inPrompt = false
-                lib.hideTextUI()
+                exports['jg-textui']:HideText() -- Updated to use jg-textui
             end
         })
     end
@@ -546,13 +547,13 @@ CreateThread(function()
                 inImpound = true
                 inPrompt = true
                 currentGarage = i
-                lib.showTextUI(locale(cache.vehicle and 'info.impound_veh' or 'menu.pol_impound'))
+                exports['jg-textui']:ShowText(locale(cache.vehicle and 'info.impound_veh' or 'menu.pol_impound')) -- Updated to use jg-textui
                 uiPrompt('impound')
             end,
             onExit = function()
                 inImpound = false
                 inPrompt = false
-                lib.hideTextUI()
+                exports['jg-textui']:HideText() -- Updated to use jg-textui
                 currentGarage = 0
             end
         })
@@ -570,14 +571,15 @@ CreateThread(function()
                 inGarage = true
                 inPrompt = true
                 currentGarage = i
-                lib.showTextUI(locale(cache.vehicle and 'info.store_veh' or 'info.grab_veh'))
+                exports['jg-textui']:ShowText(locale(cache.vehicle and 'info.store_veh' or 'info.grab_veh')) -- Updated to use jg-textui
                 uiPrompt('garage')
             end,
             onExit = function()
                 inGarage = false
                 inPrompt = false
-                lib.hideTextUI()
+                exports['jg-textui']:HideText() -- Updated to use jg-textui
             end
         })
     end
 end)
+

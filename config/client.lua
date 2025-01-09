@@ -1,13 +1,13 @@
 return {
-    useTarget = false,
+    useTarget = true,
     polyDebug = false,
 
     handcuffItems = 'handcuffs',
     policeHelicopter = 'polmav',
 
     breakCuffs = true,
-    breakCuffsDifficulty = { "medium", "hard", "medium" },
-    breakCuffsKeys = { "w", "a", "s", "d" },
+    breakCuffsDifficulty = { { areaSize = 15, speedMultiplier = 0.2, areaSize = 25, speedMultiplier = 0.8, areaSize = 30, speedMultiplier = 1.5 } },
+    breakCuffsKeys = { "E" },
 
     securityCameras = {
         hideRadar = false,

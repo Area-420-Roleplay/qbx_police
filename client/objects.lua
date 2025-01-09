@@ -216,11 +216,11 @@ local function displayInfoCloseToSpike()
 
             if isSpike and checkIsSpikeObject(GlobalState.spikeStrips, GlobalState.fixedCoords, GetEntityCoords(cache.ped), 3) then
                 if not isOpen or text ~= locale('info.delete_spike') then
-                    lib.showTextUI(locale('info.delete_spike'))
+                    exports['jg-textui']:ShowText(locale('info.delete_spike')) -- Updated to use jg-textui
                 end
             else
                 if isOpen and text == locale('info.delete_spike') then
-                    lib.hideTextUI()
+                    exports['jg-textui']:HideText() -- Updated to use jg-textui
                 end
             end
 
@@ -229,7 +229,7 @@ local function displayInfoCloseToSpike()
 
         local isOpen, text = lib.isTextUIOpen()
         if isOpen and text == locale('info.delete_spike') then
-            lib.hideTextUI()
+            exports['jg-textui']:HideText() -- Updated to use jg-textui
         end
     end)
 end
@@ -258,7 +258,7 @@ local function onPressed()
             }
         }) then
             TriggerServerEvent('police:server:despawnSpikeStrip', spike)
-            lib.hideTextUI()
+            exports['jg-textui']:HideText() -- Updated to use jg-textui
         else
             exports.qbx_core:Notify(locale('error.canceled'), 'error')
         end
@@ -317,6 +317,7 @@ AddEventHandler('onResourceStop', function (resource)
     if resource ~= GetCurrentResourceName() then return end
     local isOpen, text = lib.isTextUIOpen()
     if isOpen and text == locale('info.delete_spike') then
-        lib.hideTextUI()
+        exports['jg-textui']:HideText() -- Updated to use jg-textui
     end
 end)
+

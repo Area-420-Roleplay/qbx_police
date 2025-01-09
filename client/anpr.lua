@@ -10,7 +10,7 @@ local function speedRange(speed)
     for i = 1, #sharedConfig.speedFines do
         if speed < sharedConfig.speedFines[i].maxSpeed then
             TriggerServerEvent('police:server:Radar', i)
-            TriggerServerEvent('InteractSound_SV:PlayOnSource', 'speedcamera', 0.25)
+            TriggerServerEvent('InteractSound_SV:PlayOnSource', 'speedcamera', 0.4)
             break
         end
     end

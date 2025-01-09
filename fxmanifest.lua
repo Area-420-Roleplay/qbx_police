@@ -33,7 +33,7 @@ files {
     'html/main.css',
     'config/client.lua',
     'config/shared.lua',
-    'locales/*.json'
+    'locales/*.json',
 }
 
 lua54 'yes'
